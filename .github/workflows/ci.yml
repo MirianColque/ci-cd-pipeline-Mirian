@@ -1,5 +1,7 @@
 name: Node.js CI
 
+name: Node.js CI
+
 # Este workflow se ejecuta cada vez que haces push o pull request a main
 on:
   push:
@@ -24,8 +26,25 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
 
+      - name: Cache node_modules
+        uses: actions/cache@v4
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+
       - name: Instalar dependencias
         run: npm install
 
       - name: Ejecutar tests
         run: npm test
+
+      - name: Simular proceso de build
+        run: |
+          mkdir -p build
+          echo "Build generado correctamente" > build/build-info.txt
+
+      - name: Guardar artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-artifact
+          path: build/

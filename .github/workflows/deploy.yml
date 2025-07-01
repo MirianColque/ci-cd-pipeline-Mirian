@@ -1,0 +1,36 @@
+name: Deploy to Staging
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout del código
+        uses: actions/checkout@v4
+
+      - name: Usar Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Instalar dependencias
+        run: npm install
+
+      - name: Ejecutar tests antes de deploy
+        run: npm test
+
+      - name: Simular deploy
+        run: echo "🚀 Despliegue exitoso en staging"
+
+      - name: Crear Issue si el deploy falla
+        if: failure()
+        uses: peter-evans/create-issue-from-file@v4
+        with:
+          title: "❌ Error en el deploy"
+          content: |
+            Hubo un error durante el proceso de despliegue automático en la rama main.

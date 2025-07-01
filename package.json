@@ -1,0 +1,23 @@
+{
+  "name": "ci-cd-pipeline-mirian",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "test": "jest"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "express": "^5.1.0"
+  },
+  "devDependencies": {
+    "eslint": "^9.30.0",
+    "jest": "^30.0.3",
+    "supertest": "^7.1.1"
+  }
+}
+
